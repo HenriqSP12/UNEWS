@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header img{
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    margin-left: 20px;
+}
+
+nav{
+    background-color: #003262;
+}
+
+.carousel {
+    height: 400px;
+}
+
+.carousel-item img {
+    height: 100%;
+    object-fit: cover;
+}
+
+main{
+    padding: 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+}
