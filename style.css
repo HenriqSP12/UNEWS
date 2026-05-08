@@ -26,7 +26,13 @@ nav{
 
 .carousel-item img {
     height: 100%;
+    margin: auto;
     object-fit: cover;
+}
+
+.img-40 {
+    width: 40%;
+    border-radius: 10px;
 }
 
 main{
