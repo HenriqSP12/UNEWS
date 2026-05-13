@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esportes - UNews Acessível</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="accessibility-bar bg-light p-2 d-flex justify-content-center border-bottom" role="region" aria-label="Ferramentas de acessibilidade">
+    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+</button>
+    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A-</button>
+    <button class="btn btn-sm btn-dark mx-2" onclick="toggleContrast()" aria-label="Alternar alto contraste">Alto Contraste</button>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+</div>
+
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo de esportes</a>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="media/unesc.png" alt="Logotipo UNews" class="logo-img">
+        </div>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark main-nav" aria-label="Navegação de esportes">
+            <div class="container-fluid justify-content-end">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu de navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Jornal</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="esportes.html">Esportes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entretenimento.html">Entretenimento</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="conteudo-principal" class="container mt-4">
+        <h1 class="visually-hidden">Seção de Esportes - UNews</h1>
+
+        <div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="campo-busca" class="form-control form-control-lg" 
+                   placeholder="Pesquisar notícias..." aria-label="Digite aqui para filtrar as notícias">
+        </div>
+    </div>
+</div>
+
+        <section aria-label="Notícia de esporte em destaque" class="carousel-section">
+            <div class="card news-card-highlight border-0">
+                <img src="media/noticia.png" class="img-fluid rounded" alt="Imagem em destaque da seção de esportes">
+                <div class="mt-3">
+                    <h2 class="h3 fw-bold color-unesc">Destaque do Dia: Resultados das Olimpíadas Acadêmicas UNESC</h2>
+                    <p class="lead">Confira a cobertura completa das competições que agitaram o campus esta semana.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ultimas-noticias-section mt-5">
+            <h2 class="section-title">Últimas do Esporte</h2>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Jogadores de futebol em campo">
+                        <div class="card-body">
+                            <h3 class="card-title">Campeonato de Futebol Regional</h3>
+                            <p class="card-text">Times locais se preparam para as finais que acontecem em Colatina no próximo mês.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre o Campeonato Regional de Futebol">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Atleta correndo em pista de atletismo">
+                        <div class="card-body">
+                            <h3 class="card-title">Maratona de Inverno 2026</h3>
+                            <p class="card-text">Inscrições abertas para a maratona que passará pelas principais avenidas da cidade.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre a Maratona de Inverno">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Piscina olímpica com nadadores">
+                        <div class="card-body">
+                            <h3 class="card-title">Natação: Novos Recordes</h3>
+                            <p class="card-text">Atletas da região batem marcas históricas no torneio estadual de natação.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre os recordes na natação">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2026 UNews - UNESC. Projeto com foco em acessibilidade digital.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

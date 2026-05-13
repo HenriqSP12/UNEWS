@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entretenimento - UNews Acessível</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="accessibility-bar bg-light p-2 d-flex justify-content-center border-bottom" role="region" aria-label="Ferramentas de acessibilidade">
+    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+</button>
+    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A-</button>
+    <button class="btn btn-sm btn-dark mx-2" onclick="toggleContrast()" aria-label="Alternar alto contraste">Alto Contraste</button>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    </div>
+</div>
+
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo de entretenimento</a>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="media/unesc.png" alt="Logotipo UNews" class="logo-img">
+        </div>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark main-nav" aria-label="Navegação de entretenimento">
+            <div class="container-fluid justify-content-end">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu de navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Jornal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="esportes.html">Esportes</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#" aria-current="page">Entretenimento</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="conteudo-principal" class="container mt-4">
+        <h1 class="visually-hidden">Portal UNews - Seção de Entretenimento</h1>
+
+        <div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="campo-busca" class="form-control form-control-lg" 
+                   placeholder="Pesquisar notícias..." aria-label="Digite aqui para filtrar as notícias">
+        </div>
+    </div>
+</div>
+
+        <section aria-label="Destaque de entretenimento" class="carousel-section">
+            <div class="card news-card-highlight border-0 bg-transparent">
+                <img src="media/noticia.png" class="img-fluid rounded shadow-sm" alt="Cena de um filme em cartaz ou evento cultural">
+                <div class="mt-4">
+                    <h2 class="h3 fw-bold color-unesc">Cultura e Arte: A Exposição que Movimenta Colatina</h2>
+                    <p class="lead">Saiba tudo sobre os eventos culturais e as opções de lazer para o fim de semana na região.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ultimas-noticias-section mt-5">
+            <h2 class="section-title">Cultura e Lazer</h2>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Cartaz de cinema com luzes de neon">
+                        <div class="card-body">
+                            <h3 class="card-title">Estreias da Semana</h3>
+                            <p class="card-text">Confira os filmes que chegam às telonas e as promoções para estudantes e idosos.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre as estreias de cinema da semana">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Instrumentos musicais em um palco iluminado">
+                        <div class="card-body">
+                            <h3 class="card-title">Shows na Praça Central</h3>
+                            <p class="card-text">Programação musical gratuita para todas as idades valorizando os artistas locais.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre os shows na praça central">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/noticia.png" class="card-img-top" alt="Pessoa utilizando óculos de realidade virtual">
+                        <div class="card-body">
+                            <h3 class="card-title">Tecnologia e Diversão</h3>
+                            <p class="card-text">Como os novos gadgets estão transformando a forma como consumimos lazer em casa.</p>
+                            <a href="#" class="btn btn-action" aria-label="Leia mais sobre tecnologia e diversão">Leia mais</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2026 UNews - UNESC. Conteúdo adaptado para máxima acessibilidade digital.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
