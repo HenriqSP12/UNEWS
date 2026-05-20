@@ -154,3 +154,77 @@ body.alto-contraste .btn-action {
     color: #000000 !important;
     border: 2px solid #ffffff !important;
 }
+
+/* =========================================
+   Acessibilidade: Container de Leitura Focada
+   ========================================= */
+.leitura-container {
+    background-color: var(--branco);
+    border: 3px solid var(--azul-unesc);
+    scroll-margin-top: 20px; /* Dá um respiro no topo quando a tela rola até ele */
+}
+
+.leitura-container:focus {
+    outline: 4px dashed var(--azul-unesc);
+    outline-offset: 4px;
+}
+
+.leitor-texto {
+    font-size: 1.1rem; /* Fonte um pouco maior para leitura tranquila */
+}
+
+.fechar-btn {
+    font-weight: bold;
+}
+
+/* Regras de Alto Contraste para o Container */
+body.alto-contraste .leitura-container {
+    background-color: #000000 !important;
+    border: 3px solid #ffff00 !important;
+}
+
+body.alto-contraste .leitura-container h2,
+body.alto-contraste .leitor-texto {
+    color: #ffff00 !important;
+}
+
+body.alto-contraste .fechar-btn {
+    color: #000000 !important;
+    background-color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+/* =========================================
+   Acessibilidade: Widget de Lupa Virtual
+   ========================================= */
+#lupa-lente {
+    position: absolute;
+    border: 3px solid var(--azul-unesc);
+    border-radius: 50%; /* Deixa redonda */
+    width: 250px; 
+    height: 250px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    display: none; /* Escondida por padrão */
+    overflow: hidden;
+    z-index: 9999;
+    background-color: var(--branco);
+    pointer-events: none; /* Permite clicar através da lupa */
+}
+
+/* Quando a lupa está ligada */
+#lupa-lente.ativa {
+    display: block;
+}
+
+/* Organiza o conteúdo clonado lá dentro */
+#lupa-conteudo {
+    position: absolute;
+    transform-origin: top left;
+    /* width: 100%; <- APAGUE ESSA LINHA */
+}
+
+/* Mantém o suporte ao Alto Contraste para a lupa */
+body.alto-contraste #lupa-lente {
+    border-color: #ffff00 !important;
+    background-color: #000000 !important;
+}

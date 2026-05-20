@@ -9,15 +9,16 @@
 </head>
 <body>
 
-    <div class="accessibility-bar bg-light p-2 d-flex justify-content-center border-bottom" role="region" aria-label="Ferramentas de acessibilidade">
-    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+</button>
-    <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A-</button>
-    <button class="btn btn-sm btn-dark mx-2" onclick="toggleContrast()" aria-label="Alternar alto contraste">Alto Contraste</button>
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+    <div class="accessibility-bar bg-light p-2 d-flex justify-content-center border-bottom sticky-top" role="region" aria-label="Ferramentas de acessibilidade">
+        <button class="btn btn-sm btn-primary mx-1" id="btn-pt" onclick="mudarIdioma('pt')" aria-label="Mudar para Português">PT</button>
+        <button class="btn btn-sm btn-outline-secondary mx-1" id="btn-en" onclick="mudarIdioma('en')" aria-label="Change to English">EN</button>
+        <button class="btn btn-sm btn-outline-secondary mx-1" id="btn-es" onclick="mudarIdioma('es')" aria-label="Cambiar a español">ES</button>
+    
+        <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(1)">A+</button>
+        <button class="btn btn-sm btn-outline-dark mx-2" onclick="changeFontSize(-1)">A-</button>
+        <button class="btn btn-sm btn-dark mx-2" onclick="toggleContrast()">Alto Contraste</button>
+        <button class="btn btn-outline-dark" id="btn-lupa" onclick="toggleLupa(event)">🔍 Lupa</button>
     </div>
-</div>
 
     <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
@@ -33,9 +34,9 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Jornal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="esportes.html">Esportes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="entretenimento.html">Entretenimento</a></li>
+                        <a class="nav-link active" href="index.html" data-i18n="menuJornal">Jornal</a>
+                        <a class="nav-link" href="esportes.html" data-i18n="menuEsportes">Esportes</a>
+                        <a class="nav-link" href="entretenimento.html" data-i18n="menuEntretenimento">Entretenimento</a>
                     </ul>
                 </div>
             </div>
@@ -46,23 +47,22 @@
         <h1 class="visually-hidden">UNews - Notícias da UNESC</h1>
 
         <div class="container mt-4 mb-4">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <input type="text" id="campo-busca" class="form-control form-control-lg" 
-                   placeholder="Pesquisar notícias..." aria-label="Digite aqui para filtrar as notícias">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <input type="text" id="campo-busca" class="form-control form-control-lg" placeholder="Pesquisar notícias..." data-i18n-placeholder="buscar" aria-label="Digite aqui para filtrar as notícias">
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
         <section aria-label="Notícias em destaque" class="carousel-section">
             <div id="noticiasDestaque" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="carousel-img-wrapper">
-                            <img src="media/noticia.png" class="d-block w-100" alt="Descrição da manchete principal">
+                            <img src="media/not1.jpeg" class="d-block w-100" alt="Descrição da manchete principal">
                         </div>
                     </div>
-                    </div>
+                </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#noticiasDestaque" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Anterior</span>
@@ -75,83 +75,206 @@
         </section>
 
         <section class="ultimas-noticias-section mt-5">
-    <h2 class="section-title">Últimas Notícias</h2>
-    
-    <div class="row g-4 justify-content-center">
-        
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 1">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 1</h3>
-                    <p class="card-text">Resumo da notícia com fonte legível e bom contraste para facilitar a leitura.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 1">Leia mais</a>
+            <h2 class="section-title" data-i18n="tituloSecao">Últimas Notícias</h2>
+            
+            <div class="row g-4 justify-content-center">
+                
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/not1.jpeg" class="card-img-top" alt="Descrição da imagem da notícia 1">
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title" data-i18n="tituloNoticia1">Edição Especial: O Caso AEED</h3>
+                            <p class="card-text" data-i18n="descricaoNoticia1">Grupo de universitários é investigado após sobreviver um semestre inteiro sem entender o AEED.</p>
+                            <button class="btn btn-action mt-auto leia-mais" onclick="abrirNoticia('noticia-1', this)" aria-label="Ler notícia completa: Edição Especial O Caso AEED" data-i18n="leiaMais">Leia mais</button>
+                        </div>
+                    </article>
                 </div>
-            </article>
-        </div>
 
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 2">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 2</h3>
-                    <p class="card-text">Conteúdo adaptado para garantir que idosos e pessoas com baixa visão compreendam o texto.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 2">Leia mais</a>
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/not2.jpeg" class="card-img-top" alt="Descrição da imagem da notícia 2">
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title" data-i18n="tituloNoticia2">Crise na Cantina</h3>
+                            <p class="card-text" data-i18n="descricaoNoticia2">Dados levantados apontam aumento de 437% na venda de batata próximo aos horários do grupo.</p>
+                            <button class="btn btn-action mt-auto leia-mais" onclick="abrirNoticia('noticia-2', this)" aria-label="Ler notícia completa: Crise na cantina">Leia mais</button>
+                        </div>
+                    </article>
                 </div>
-            </article>
-        </div>
 
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 3">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 3</h3>
-                    <p class="card-text">O uso de cores sólidas e fontes sem serifa ajuda na navegação de quem tem dificuldades visuais.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 3">Leia mais</a>
+                <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                    <article class="card news-card h-100">
+                        <img src="media/not3.jpeg" class="card-img-top" alt="Descrição da imagem da notícia 3">
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title" data-i18n="tituloNoticia3">Recorde de mensagens inúteis</h3>
+                            <p class="card-text" data-i18n="descricaoNoticia3">O grupo do WhatsApp dos estudantes registrou mais de 800 mensagens em apenas uma madrugada.</p>
+                            <button class="btn btn-action mt-auto leia-mais" onclick="abrirNoticia('noticia-3', this)" aria-label="Ler notícia completa: Recorde de mensagens inúteis" data-i18n="leiaMais">Leia mais</button>
+                        </div>
+                    </article>
                 </div>
-            </article>
-        </div>
 
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 4">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 4</h3>
-                    <p class="card-text">Mantenha os textos curtos e diretos para não cansar o usuário durante a leitura.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 4">Leia mais</a>
+            </div>
+        </section>
+
+        <section id="area-leitura" class="leitura-container mt-5 p-4 rounded shadow" tabindex="-1" style="display: none;" aria-live="polite">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                <h2 id="leitor-titulo" class="mb-0" style="color: var(--azul-unesc); font-weight: bold;" data-i18n="tituloNoticia1">Título</h2>
+                <button class="btn btn-outline-danger fechar-btn" onclick="fecharNoticia()" aria-label="Fechar notícia e voltar aos cards" data-i18n="fechar">Fechar [X]</button>
+            </div>
+            
+            <div id="leitor-conteudo" class="leitor-texto">
                 </div>
-            </article>
-        </div>
+        </section>
 
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 5">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 5</h3>
-                    <p class="card-text">Descrição objetiva ajuda usuários de leitores de tela a encontrar a informação rapidamente.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 5">Leia mais</a>
-                </div>
-            </article>
-        </div>
+        <div id="templates-noticias" style="display: none;" aria-hidden="true">
+            
+            <div id="template-noticia-1-pt">
+                <p>A faculdade iniciou uma investigação informal após um grupo formado por Lavígnea Ferrari Coimbra Elizeu, Mariana Mendes Cosme, Flavio Novelli De Oliveira, Rhuan Vitor Martin Debortoli, Nicolas Lemes Nicoli, Henrique e Iuri conseguir concluir diversas atividades sem jamais descobrir onde realmente ficam os materiais da disciplina de AEED — ou sequer cogitar a possibilidade de lê-los.</p>
+                <p>Segundo testemunhas, o grupo desenvolveu uma rotina extremamente avançada de sobrevivência acadêmica. O processo começa sempre da mesma forma: abrir o sistema acadêmico, encarar a tela em silêncio absoluto, sofrer psicologicamente por alguns minutos e então decidir que “o importante é entregar alguma coisa”.</p>
+                <p>Relatórios apontam ainda que aproximadamente 93% dos trabalhos foram produzidos em estado crítico de desespero entre 22h47 e 23h58, horário considerado pelos pesquisadores como “o pico da criatividade forçada”.</p>
+                <p>A coordenação informou que o grupo se tornou um fenômeno raro:
+                    “Eles não estudam pelo conteúdo. Eles estudam pelo medo.”
+                    Fontes próximas revelaram que o maior contato do grupo com os materiais da disciplina ocorreu quando alguém acidentalmente abriu um PDF errado tentando achar o botão de envio da atividade.</p>
+            </div>
+            <div id="template-noticia-1-en" style="display: none;">
+                <p>The university initiated an informal investigation after a group formed by Lavígnea Ferrari Coimbra Elizeu, Mariana Mendes Cosme, Flavio Novelli De Oliveira, Rhuan Vitor Martin Debortoli, Nicolas Lemes Nicoli, Henrique e Iuri managed to complete various activities without ever discovering where the materials for the AEED discipline actually are — or even considering the possibility of reading them.</p>
+                <p>According to witnesses, the group developed an extremely advanced routine for academic survival. The process always starts the same way: open the academic system, face the screen in absolute silence, suffer psychologically for a few minutes, and then decide that "what matters is to submit something."</p>
+                <p>Reports also indicate that approximately 93% of the assignments were produced in a state of critical despair between 10:47 PM and 11:58 PM, a time period considered by researchers as "the peak of forced creativity."</p>
+                <p>The coordination informed that the group has become a rare phenomenon:
+                    "They don't study for the content. They study for fear."
+                    Sources close to the matter revealed that the group's greatest contact with the discipline's materials occurred when someone accidentally opened the wrong PDF while trying to find the assignment submission button.</p>
+            </div>
+            <div id="template-noticia-1-es" style="display: none;">
+                <p>La facultad inició una investigación informal después de que un grupo formado por Lavígnea Ferrari Coimbra Elizeu, Mariana Mendes Cosme, Flavio Novelli De Oliveira, Rhuan Vitor Martin Debortoli, Nicolas Lemes Nicoli, Henrique y Iuri lograra concluir diversas actividades sin jamás descubrir dónde se encuentran realmente los materiales de la asignatura de AEED — o siquiera considerar la posibilidad de leerlos.</p>
+                <p>Según testigos, el grupo desarrolló una rutina extremadamente avanzada de supervivencia académica. El proceso comienza siempre de la misma forma: abrir el sistema académico, mirar la pantalla en silencio absoluto, sufrir psicológicamente por algunos minutos y entonces decidir que “lo importante es entregar algo”.</p>
+                <p>Los informes señalan además que aproximadamente el 93% de los trabajos fueron producidos en estado crítico de desesperación entre las 22:47 y las 23:58, horario considerado por los investigadores como “el pico de la creatividad forzada”.</p>
+                <p>La coordinación informó que el grupo se ha convertido en un fenómeno raro:
+                “Ellos no estudian por el contenido. Ellos estudian por el miedo.”
+                Fuentes cercanas revelaron que el mayor contacto del grupo con los materiales de la asignatura ocurrió cuando alguien accidentalmente abrió un PDF equivocado intentando encontrar el botón de envío de la actividad.</p>
+            </div>
 
-        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-            <article class="card news-card h-100">
-                <img src="media/noticia.png" class="card-img-top" alt="Descrição da imagem da notícia 6">
-                <div class="card-body">
-                    <h3 class="card-title">Título da Notícia 6</h3>
-                    <p class="card-text">Grades organizadas evitam a poluição visual, facilitando o foco em cada conteúdo individualmente.</p>
-                    <a href="#" class="btn btn-action" aria-label="Leia mais sobre: Título da Notícia 6">Leia mais</a>
-                </div>
-            </article>
-        </div>
+            <div id="template-noticia-2-pt" style="display: none;">
+                <p>Funcionários relatam que, ao ouvirem passos no corredor, já começam automaticamente a preparar porções grandes “porque sabem que vem sofrimento pela frente”. Especialistas afirmam que o grupo atingiu um nível tão elevado de estresse acadêmico que o corpo já não diferencia ansiedade de fome.</p>
+                <p>Já o consumo de Mentos do grupo se tornou tão intenso que alunos começaram a suspeitar que o doce estaria sendo utilizado como combustível acadêmico alternativo.</p>
+                <p>Especialistas afirmam que o grupo atingiu um nível tão elevado de estresse acadêmico que o corpo já não diferencia ansiedade de fome.</p>
+                <p>Enquanto isso, Flavio Novelli De Oliveira teria desenvolvido uma habilidade inédita no ambiente universitário: passar duas horas olhando para o notebook sem realizar qualquer ação concreta.</p>
+                <p>Pesquisadores chamam o fenômeno de:
+                “processamento mental improdutivo avançado.”
+                Colegas afirmam que, durante esse período, Flavio apenas alterna entre:
+                abrir o arquivo,
+                fechar o arquivo,
+                olhar para o teto,
+                reclamar da faculdade,
+                e pesquisar vídeos aleatórios “só pra descansar cinco minutos”.</p>
+                <p>Os cinco minutos geralmente duram uma hora e meia.</p>
+                <p>Já o consumo de Mentos do grupo se tornou tão intenso que alunos começaram a suspeitar que o doce estaria sendo utilizado como combustível acadêmico alternativo.</p>
+            </div>
+            <div id="template-noticia-2-en" style="display: none;">
+                <p>Employees report that, upon hearing footsteps in the hallway, they automatically begin preparing large portions “because they know suffering is coming.” Specialists state that the group has reached such a high level of academic stress that the body no longer differentiates anxiety from hunger.</p>
+                <p>Meanwhile, Flavio Novelli De Oliveira would have developed an unprecedented skill in the university environment: spending two hours looking at the laptop without performing any concrete action.</p>
+                <p>Researchers call this phenomenon:
+                “Advanced unproductive mental processing.”
+                Colleagues claim that, during this period, Flavio only alternates between:
+                opening the file,
+                closing the file,
+                looking at the ceiling,
+                complaining about the university,
+                and searching for random videos “just to rest for five minutes”.</p>
+                <p>The five minutes usually last an hour and a half.</p>
+                <p>Already, the consumption of Mentos by the group has become so intense that students have started to suspect that the candy is being used as an alternative academic fuel.</p>
+            </div>
+            </div>
+            <div id="template-noticia-2-es" style="display: none;">
+                <p>Los empleados relatan que, al escuchar pasos en el pasillo, ya comienzan automáticamente a preparar porciones grandes "porque saben que viene sufrimiento por delante". Los especialistas afirman que el grupo alcanzó un nivel tan elevado de estrés académico que el cuerpo ya no diferencia la ansiedad del hambre.</p>
+                <p>Por otro lado, el consumo de Mentos del grupo se volvió tan intenso que los alumnos comenzaron a sospechar que el dulce estaría siendo utilizado como combustible académico alternativo.</p>
+                <p>Los especialistas afirman que el grupo alcanzó un nivel tan elevado de estrés académico que el cuerpo ya no diferencia la ansiedad del hambre.</p>
+                <p>Mientras tanto, Flavio Novelli De Oliveira habría desarrollado una habilidad inédita en el ambiente universitario: pasar dos horas mirando el notebook sin realizar ninguna acción concreta.</p>
+                <p>Los investigadores llaman al fenómeno: "procesamiento mental improductivo avanzado". Sus compañeros afirman que, durante ese período, Flavio solo alterna entre: abrir el archivo, cerrar el archivo, mirar al techo, quejarse de la facultad y buscar videos aleatorios "solo para descansar cinco minutos".</p>
+                <p>Los cinco minutos generalmente duran una hora y media.</p>
+                <p>Por otro lado, el consumo de Mentos del grupo se volvió tan intenso que los alumnos comenzaron a sospechar que el dulce estaría siendo utilizado como combustible académico alternativo.</p>
+            </div>
 
-    </div>
-</section>
+            <div id="template-noticia-3-pt" style="display: none;">
+                <p>Segundo análises, apenas 11 mensagens estavam realmente relacionadas ao trabalho. As demais se dividiam entre: Reclamações do onibus e Santa Tereza ate a faculdade quebrou, Memes, áudios de desespero pois o Rhuan bebeu, figurinhas, Mariana caindo no bait, e perguntas cuja resposta já havia sido enviada anteriormente.</p>
+                <p>No fim da madrugada, o trabalho foi entregue às 23h59 em um estado descrito pelos próprios integrantes como: “Nas mãos de Deus.”</p>
+                <p>As demais se dividiam entre:
+                Reclamações do onibus e Santa Tereza ate a faculdade quebrou,
+                Memes,
+                áudios de desespero pois o Rhuan bebeu,
+                figurinhas,
+                Mariana caindo no bait,
+                e perguntas cuja resposta já havia sido enviada anteriormente.</p>
+                <P>Entre os tópicos mais discutidos estavam:
+                “Alguém começou?”
+                “Era individual ou em grupo?”
+                “Até que horas é a entrega?”
+                “Tem que ser ABNT?”
+                “Onde vocês estão?”
+                “Quem ficou responsável por essa parte?”</p>
+                <p>De acordo com testemunhas, Iuri passou aproximadamente três horas digitando:
+                “já tô fazendo”
+                sem jamais abrir o arquivo do trabalho.</p>
+                <p>Já Lavígnea Ferrari Coimbra Elizeu teria surtado após descobrir que existia uma segunda página nas instruções da atividade.</p>
+                <p>Enquanto isso, Mariana Mendes Cosme tentava organizar o grupo enquanto simultaneamente aceitava emocionalmente que ninguém sabia o que estava acontecendo.</p>
+                <p>No fim da madrugada, o trabalho foi entregue às 23h59 em um estado descrito pelos próprios integrantes como:
+                “Nas mãos de Deus.”</p>
+            </div>
+            <div id="template-noticia-3-en" style="display: none;">
+                <p>According to analyses, only 11 messages were truly related to the work. The rest were divided between: Complaints about the bus from Santa Tereza to the college breaking down, Memes, audio clips of despair because Rhuan drank, stickers, Mariana falling for the bait, and questions whose answers had already been sent previously.</p>
+                <p>At the end of the night, the work was submitted at 11:59 PM in a state described by the members themselves as: "In God's hands."</p>
+                <p>The remaining messages were divided between:
+                Complaints about the bus from Santa Tereza to the college breaking down,
+                Memes,
+                audio clips of despair because Rhuan drank,
+                stickers,
+                Mariana falling for the bait,
+                and questions whose answers had already been sent previously.</p>
+                <p>Among the most discussed topics were:
+                "Has anyone started?"
+                "Was it individual or in a group?"
+                "What time is the deadline?"
+                "Does it have to be ABNT format?"
+                "Where are you guys?"
+                "Who was responsible for this part?"</p>
+                <p>According to witnesses, Iuri spent approximately three hours typing:
+                "I'm already doing it"
+                without ever opening the assignment file.</p>
+                <p>Meanwhile, Lavígnea Ferrari Coimbra Elizeu allegedly freaked out after discovering that there was a second page in the activity instructions.</p>
+                <p>At the same time, Mariana Mendes Cosme tried to organize the group while simultaneously emotionally accepting that no one knew what was going on.</p>
+                <p>At the end of the night, the assignment was submitted at 11:59 PM in a state described by the members themselves as:
+                "In God's hands."</p>
+            </div>
+            <div id="template-noticia-3-es" style="display: none;">
+                <p>Según los análisis, solo 11 mensajes estaban realmente relacionados con el trabajo. Los demás se dividían entre: Quejas del autobús de Santa Tereza a la facultad que se averió, Memes, audios de desesperación porque Rhuan bebió, stickers, Mariana cayendo en el bait, y preguntas cuya respuesta ya había sido enviada anteriormente.</p>
+                <p>Al final de la madrugada, el trabajo fue entregado a las 23:59 en un estado descrito por los propios integrantes como: "En las manos de Dios."</p>
+                <p>Los demás se dividían entre:
+                Quejas del autobús de Santa Tereza a la facultad que se averió,
+                Memes,
+                audios de desesperación porque Rhuan bebió,
+                stickers,
+                Mariana cayendo en el bait,
+                y preguntas cuya respuesta ya había sido enviada anteriormente.</p>
+                <p>Entre los temas más discutidos estaban:
+                "¿Alguien empezó?"
+                "¿Era individual o en grupo?"
+                "¿Hasta qué hora es la entrega?"
+                "¿Tiene que ser en formato ABNT?"
+                "¿Dónde están?"
+                "¿Quién quedó responsable de esta parte?"</p>
+                <p>De acuerdo con testigos, Iuri pasó aproximadamente tres horas escribiendo:
+                "ya lo estoy haciendo"
+                sin jamás abrir el archivo del trabajo.</p>
+                <p>Por su parte, Lavígnea Ferrari Coimbra Elizeu habría enloquecido tras descubrir que existía una segunda página en las instrucciones de la actividad.</p>
+                <p>Mientras tanto, Mariana Mendes Cosme intentaba organizar el grupo mientras simultáneamente aceptaba emocionalmente que nadie sabía lo que estaba pasando.</p>
+                <p>Al final de la madrugada, el trabajo fue entregado a las 23:59 en un estado descrito por los propios integrantes como:
+                "En las manos de Dios."</p>
+            </div>
+
+        </div>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer mt-5">
         <div class="container text-center">
-            <p>&copy; 2026 UNews. Projeto de Acessibilidade Acadêmico.</p>
+            <p data-i18n="rodape">&copy; 2026 UNews. Projeto de Acessibilidade Acadêmico.</p>
         </div>
     </footer>
 
