@@ -23,7 +23,7 @@ Assim que terminar, a pasta UNEWS vai aparecer ali do lado esquerdo.
 Passo 3: Configurar a Base de Dados
 O site não vai abrir as notícias sem a base de dados
 
-Abram o navegador e acedam a: http://localhost/phpmyadmin
+Abram o navegador e acessem: http://localhost/phpmyadmin
 
 Cliquem em Novo na barra lateral esquerda e criem uma base de dados chamada exatamente: unews_db
 
