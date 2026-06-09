@@ -1,89 +1,24 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNews - Painel de Administração</title>
-    <!-- Bootstrap CSS -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        :root {
-            --azul-unesc: #003262;
-            --fundo-cinza: #f8f9fa;
-        }
-        
-        body { 
-            background-color: var(--fundo-cinza); 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding-bottom: 50px;
-        }
-
-        /* Estilização da Navbar do Admin */
-        .admin-navbar {
-            background-color: var(--azul-unesc);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        /* Estilização dos Cards do Formulário */
-        .admin-card {
-            background: #fff;
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .admin-card-header {
-            background-color: rgba(0, 50, 98, 0.05);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 15px 25px;
-            color: var(--azul-unesc);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-card-body {
-            padding: 25px;
-        }
-
-        /* Estilização dos Inputs */
-        .form-label {
-            font-weight: 600;
-            color: #495057;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--azul-unesc);
-            box-shadow: 0 0 0 0.25rem rgba(0, 50, 98, 0.25);
-        }
-
-        /* Botão Flutuante/Principal */
-        .btn-publicar {
-            background-color: var(--azul-unesc);
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-publicar:hover {
-            background-color: #002244;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 50, 98, 0.3);
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="admin-page">
 
-<!-- Cabeçalho do Painel -->
 <nav class="navbar navbar-dark admin-navbar mb-5 py-3">
     <div class="container">
         <span class="navbar-brand mb-0 h1 fs-3">
@@ -114,7 +49,6 @@
 
             <form action="salvar_noticia.php" method="POST">
                 
-                <!-- Card 1: Configurações Gerais -->
                 <div class="admin-card">
                     <div class="admin-card-header">
                         <i class="bi bi-image"></i> Definições Visuais e Destino
@@ -143,7 +77,6 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Português -->
                 <div class="admin-card">
                     <div class="admin-card-header">
                         <span>🇧🇷 Conteúdo em Português (PT)</span>
@@ -164,7 +97,6 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Inglês -->
                 <div class="admin-card">
                     <div class="admin-card-header">
                         <span>🇺🇸 Conteúdo em Inglês (EN)</span>
@@ -185,7 +117,6 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Espanhol -->
                 <div class="admin-card">
                     <div class="admin-card-header">
                         <span>🇪🇸 Conteúdo em Espanhol (ES)</span>
@@ -206,7 +137,6 @@
                     </div>
                 </div>
 
-                <!-- Botões de Ação -->
                 <div class="d-flex justify-content-end gap-3 mt-4 mb-5">
                     <a href="index.php" class="btn btn-light border btn-lg px-4">Cancelar</a>
                     <button type="submit" class="btn btn-publicar px-5">
@@ -218,8 +148,209 @@
         </div>
     </div>
 </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNews - Painel de Administração</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f4f4; padding-top: 30px; }
+        .admin-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #003262; font-weight: bold; }
+        .lang-section { border-left: 4px solid #003262; padding-left: 15px; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
 
-<!-- Bootstrap JS (para o funcionamento do botão de fechar o alerta) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<main class="container mb-5">
+    <div class="admin-container">
+        <h1 class="text-center mb-4">Publicar Notícia</h1>
+
+        <?php
+        if (isset($_GET['sucesso'])) {
+            echo '<div class="alert alert-success" role="alert">Notícia publicada com sucesso no portal!</div>';
+        }
+        ?>
+
+        <form action="salvar_noticia.php" method="POST">
+            
+            <div class="mb-4">
+                <h2>1. Definições</h2>
+                <div class="mb-3">
+                    <label for="imagem" class="form-label">Caminho ou Nome da Imagem</label>
+                    <input type="text" class="form-control" id="imagem" name="imagem" required>
+                </div>
+                <div class="mb-3">
+                    <label for="categoria" class="form-label">Página de Destino (Categoria)</label>
+                    <select class="form-select" id="categoria" name="categoria" required>
+                        <option value="jornal">Jornal (Página Principal - index.php)</option>
+                        <option value="esportes">Esportes (esportes.php)</option>
+                        <option value="entretenimento">Entretenimento (entretenimento.php)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Português (PT)</h2>
+                <div class="mb-3">
+                    <label for="titulo_pt" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo_pt" name="titulo_pt" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_pt" class="form-label">Resumo (Texto do Card)</label>
+                    <textarea class="form-control" id="resumo_pt" name="resumo_pt" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_pt" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_pt" name="conteudo_pt" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Inglês (EN)</h2>
+                <div class="mb-3">
+                    <label for="titulo_en" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="titulo_en" name="titulo_en" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_en" class="form-label">Resumo</label>
+                    <textarea class="form-control" id="resumo_en" name="resumo_en" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_en" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_en" name="conteudo_en" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Espanhol (ES)</h2>
+                <div class="mb-3">
+                    <label for="titulo_es" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo_es" name="titulo_es" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_es" class="form-label">Resumo</label>
+                    <textarea class="form-control" id="resumo_es" name="resumo_es" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_es" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_es" name="conteudo_es" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success btn-lg">Publicar Notícia</button>
+                <a href="index.php" class="btn btn-outline-secondary">Voltar ao Portal</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNews - Painel de Administração</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f4f4; padding-top: 30px; }
+        .admin-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #003262; font-weight: bold; }
+        .lang-section { border-left: 4px solid #003262; padding-left: 15px; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+<main class="container mb-5">
+    <div class="admin-container">
+        <h1 class="text-center mb-4">Publicar Notícia</h1>
+
+        <?php
+        if (isset($_GET['sucesso'])) {
+            echo '<div class="alert alert-success" role="alert">Notícia publicada com sucesso no portal!</div>';
+        }
+        ?>
+
+        <form action="salvar_noticia.php" method="POST">
+            
+            <div class="mb-4">
+                <h2>1. Definições</h2>
+                <div class="mb-3">
+                    <label for="imagem" class="form-label">Caminho ou Nome da Imagem</label>
+                    <input type="text" class="form-control" id="imagem" name="imagem" required>
+                </div>
+                <div class="mb-3">
+                    <label for="categoria" class="form-label">Página de Destino (Categoria)</label>
+                    <select class="form-select" id="categoria" name="categoria" required>
+                        <option value="jornal">Jornal (Página Principal - index.php)</option>
+                        <option value="esportes">Esportes (esportes.php)</option>
+                        <option value="entretenimento">Entretenimento (entretenimento.php)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Português (PT)</h2>
+                <div class="mb-3">
+                    <label for="titulo_pt" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo_pt" name="titulo_pt" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_pt" class="form-label">Resumo (Texto do Card)</label>
+                    <textarea class="form-control" id="resumo_pt" name="resumo_pt" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_pt" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_pt" name="conteudo_pt" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Inglês (EN)</h2>
+                <div class="mb-3">
+                    <label for="titulo_en" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="titulo_en" name="titulo_en" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_en" class="form-label">Resumo</label>
+                    <textarea class="form-control" id="resumo_en" name="resumo_en" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_en" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_en" name="conteudo_en" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="lang-section">
+                <h2>Conteúdo em Espanhol (ES)</h2>
+                <div class="mb-3">
+                    <label for="titulo_es" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo_es" name="titulo_es" required>
+                </div>
+                <div class="mb-3">
+                    <label for="resumo_es" class="form-label">Resumo</label>
+                    <textarea class="form-control" id="resumo_es" name="resumo_es" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo_es" class="form-label">Texto Completo da Notícia (Pode usar tags HTML como &lt;p&gt;)</label>
+                    <textarea class="form-control" id="conteudo_es" name="conteudo_es" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success btn-lg">Publicar Notícia</button>
+                <a href="index.php" class="btn btn-outline-secondary">Voltar ao Portal</a>
+            </div>
+        </form>
+    </div>
+</main>
+
 </body>
 </html>

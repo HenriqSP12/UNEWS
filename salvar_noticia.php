@@ -1,49 +1,55 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Agora só precisamos chamar o nosso arquivo central!
+
     include 'conexao.php';
 
-    // O uso de Prepared Statements (?) separa o comando SQL dos dados digitados pelo usuário
-    $sql = "INSERT INTO noticias (categoria, imagem, titulo_pt, resumo_pt, conteudo_pt, titulo_en, resumo_en, conteudo_en, titulo_es, resumo_es, conteudo_es) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    // Prepara a instrução no banco de dados
-    $stmt = $conn->prepare($sql);
+    $conn->begin_transaction();
 
-    if ($stmt) {
-        // O "sssssssssss" indica que estamos passando 11 parâmetros do tipo String (s)
-        // O PHP cuida de limpar e escapar esses dados automaticamente, blindando o banco
-        $stmt->bind_param("sssssssssss", 
-            $_POST['categoria'], 
-            $_POST['imagem'], 
-            $_POST['titulo_pt'], 
-            $_POST['resumo_pt'], 
-            $_POST['conteudo_pt'], 
-            $_POST['titulo_en'], 
-            $_POST['resumo_en'], 
-            $_POST['conteudo_en'], 
-            $_POST['titulo_es'], 
-            $_POST['resumo_es'], 
-            $_POST['conteudo_es']
-        );
+    try {
 
-        // Executa a query com segurança
-        if ($stmt->execute()) {
-            header("Location: admin.php?sucesso=1");
-            exit(); // É sempre uma boa prática colocar um exit() logo após um redirecionamento
-        } else {
-            echo "Erro ao publicar: " . $stmt->error;
+        $sqlNoticia = "INSERT INTO noticias (categoria, imagem) VALUES (?, ?)";
+        $stmt1 = $conn->prepare($sqlNoticia);
+        $stmt1->bind_param("ss", $_POST['categoria'], $_POST['imagem']);
+        $stmt1->execute();
+
+        $id_noticia = $conn->insert_id;
+        $stmt1->close();
+
+        $sqlTraducao = "INSERT INTO noticias_traducoes (noticia_id, idioma, titulo, resumo, conteudo) VALUES (?, ?, ?, ?, ?)";
+        $stmt2 = $conn->prepare($sqlTraducao);
+
+
+        $idiomas = ['pt', 'en', 'es'];
+
+        foreach ($idiomas as $lang) {
+
+            $titulo = $_POST["titulo_$lang"];
+            $resumo = $_POST["resumo_$lang"];
+            $conteudo = $_POST["conteudo_$lang"];
+
+            $stmt2->bind_param("issss", $id_noticia, $lang, $titulo, $resumo, $conteudo);
+            $stmt2->execute();
         }
+        $stmt2->close();
 
-        // Fecha a instrução
-        $stmt->close();
-    } else {
-        echo "Erro na preparação da instrução SQL: " . $conn->error;
+
+        $conn->commit();
+        
+
+        header("Location: admin.php?sucesso=1");
+        exit();
+
+    } catch (Exception $e) {
+
+        $conn->rollback();
+        echo "Erro ao publicar a notícia: " . $e->getMessage();
     }
 
-    // Fecha a conexão
+
     $conn->close();
 } else {
+
     header("Location: admin.php");
     exit();
 }

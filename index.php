@@ -1,10 +1,42 @@
 <?php
 include 'conexao.php';
-$resultado = $conn->query("SELECT * FROM noticias WHERE categoria = 'jornal' ORDER BY id DESC");
-$noticias = [];
+
+// Mude isso em cada arquivo ('jornal', 'esportes' ou 'entretenimento')
+$categoriaAtual = 'jornal'; 
+
+// Faz um JOIN para buscar a notícia + todas as traduções ligadas a ela
+$sql = "SELECT n.id, n.categoria, n.imagem, t.idioma, t.titulo, t.resumo, t.conteudo 
+        FROM noticias n
+        JOIN noticias_traducoes t ON n.id = t.noticia_id
+        WHERE n.categoria = '$categoriaAtual'
+        ORDER BY n.id DESC";
+
+$resultado = $conn->query($sql);
+$noticiasAgrupadas = [];
+
 if ($resultado) {
-    while ($linha = $resultado->fetch_assoc()) { $noticias[] = $linha; }
+    while ($linha = $resultado->fetch_assoc()) {
+        $id = $linha['id'];
+        
+        // Se a notícia ainda não está no array, cria a base (imagem, id)
+        if (!isset($noticiasAgrupadas[$id])) {
+            $noticiasAgrupadas[$id] = [
+                'id' => $id,
+                'imagem' => $linha['imagem'],
+                'categoria' => $linha['categoria']
+            ];
+        }
+        
+        // Adiciona as chaves de idioma dinamicamente (ex: titulo_pt, conteudo_en)
+        $lang = $linha['idioma']; 
+        $noticiasAgrupadas[$id]["titulo_$lang"] = $linha['titulo'];
+        $noticiasAgrupadas[$id]["resumo_$lang"] = $linha['resumo'];
+        $noticiasAgrupadas[$id]["conteudo_$lang"] = $linha['conteudo'];
+    }
 }
+
+// Reorganiza o array para ficar com índices simples (0, 1, 2) que o HTML espera
+$noticias = array_values($noticiasAgrupadas);
 
 include 'header.php';
 ?>

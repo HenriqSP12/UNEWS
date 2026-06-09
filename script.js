@@ -350,41 +350,47 @@ function toggleChatbot() {
     }
 }
 
-function enviarMensagemChat() {
+async function enviarMensagemChat() {
     const input = document.getElementById('chat-input');
     const msg = input.value.trim();
     if(!msg) return;
 
     const chatWindow = document.getElementById('chatbot-messages');
     
-    // Mostra a mensagem do usuário
+    // 1. Mostra a mensagem do usuário
     chatWindow.innerHTML += `<div class="user-msg p-2 rounded mb-3 w-85 ms-auto text-end" style="background-color: var(--fundo-cinza); color: var(--texto-escuro); border: 1px solid #ccc;">${msg}</div>`;
     input.value = '';
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
-    setTimeout(() => {
-        let msgFiltrada = msg.toLowerCase();
-        
-        // Define a resposta padrão caso não encontre nenhuma palavra-chave
-        let resposta = respostasPadrao[idiomaAtual];
+    // 2. Adiciona um indicador de "Digitando..."
+    const loadingId = 'loading-' + Date.now();
+    chatWindow.innerHTML += `<div id="${loadingId}" class="bot-msg bg-light p-2 rounded mb-3 w-85 text-muted">Pensando...</div>`;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 
-        // Busca nas intenções do idioma atual se existe alguma palavra-chave na mensagem
-        const intencoes = respostasChatbot[idiomaAtual];
-        for (let intencao of intencoes) {
-            // O método .some() verifica se pelo menos uma palavra do array está na mensagem
-            if (intencao.palavras.some(palavra => msgFiltrada.includes(palavra))) {
-                resposta = intencao.resposta;
-                break; // Achou a resposta, para a busca
-            }
-        }
+    try {
+        // 3. Faz a requisição para o seu PHP usando a API nativa fetch
+        const response = await fetch('chat_api.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                mensagem: msg,
+                idioma: idiomaAtual 
+            })
+        });
 
-        // Mostra a resposta do bot
-        chatWindow.innerHTML += `<div class="bot-msg bg-light p-2 rounded mb-3 w-85" style="border-left: 4px solid var(--azul-unesc); color: var(--texto-escuro);">${resposta}</div>`;
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        const data = await response.json();
         
-        // Acessibilidade: Lança a resposta para o leitor de tela
-        anunciarParaLeitor(resposta);
-    }, 800);
+        document.getElementById(loadingId).remove();
+        chatWindow.innerHTML += `<div class="bot-msg bg-light p-2 rounded mb-3 w-85" style="border-left: 4px solid var(--azul-unesc); color: var(--texto-escuro);">${data.resposta}</div>`;
+        
+        anunciarParaLeitor(data.resposta);
+
+    } catch (error) {
+        document.getElementById(loadingId).remove();
+        chatWindow.innerHTML += `<div class="bot-msg bg-danger text-white p-2 rounded mb-3 w-85">Erro ao conectar com o assistente.</div>`;
+    }
+    
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 function lerNoticiaEmVozAlta() {

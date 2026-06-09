@@ -1,6 +1,3 @@
-/* =========================================
-   1. VARIÁVEIS GERAIS
-   ========================================= */
 :root {
     --azul-unesc: #003262;
     --fundo-cinza: #f4f4f4;
@@ -11,9 +8,6 @@
     --cor-foco: #003262;
 }
 
-/* =========================================
-   2. RESET E ESTILOS BASE
-   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -27,7 +21,6 @@ body {
     line-height: 1.6;
 }
 
-/* Esconder elementos apenas visualmente (Leitores de tela) */
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -55,9 +48,6 @@ body {
     outline: 3px solid var(--cor-foco);
 }
 
-/* =========================================
-   3. BARRA DE ACESSIBILIDADE
-   ========================================= */
 .accessibility-bar {
     background-color: var(--fundo-cinza);
     border-bottom: 1px solid var(--cor-borda);
@@ -99,9 +89,6 @@ body {
     border-color: var(--azul-unesc);
 }
 
-/* =========================================
-   4. CABEÇALHO E NAVEGAÇÃO
-   ========================================= */
 .site-header {
     background-color: var(--branco);
     position: relative;
@@ -109,46 +96,20 @@ body {
 }
 
 .logo-img {
-    width: 150px; /* Tamanho base */
-    max-width: 40vw; /* Garante que a logo nunca ultrapasse 40% da tela */
+    width: 150px;
+    max-width: 40vw;
     height: auto;
     padding: 10px;
     position: absolute;
     top: 0;
     left: 20px;
     z-index: 10;
-    transition: all 0.3s ease; /* Efeito suave ao redimensionar a tela */
+    transition: all 0.3s ease;
 }
 
 .main-nav {
     background-color: var(--azul-unesc) !important;
     min-height: 80px;
-}
-
-
-
-@media (max-width: 768px) {
-    .logo-img {
-        width: 110px; 
-        left: 5px; 
-        top: 5px; 
-    }
-
-
-    .main-nav .container-fluid {
-        padding-left: 115px; 
-    }
-
-
-    .nav-link {
-        padding: 0.5rem !important; 
-        font-size: 0.85rem; 
-    }
-    
-    
-    .nav-link i {
-        display: none;
-    }
 }
 
 .nav-link {
@@ -163,9 +124,27 @@ body {
     font-weight: 800 !important; 
 }
 
-/* =========================================
-   5. ESTRUTURA DE NOTÍCIAS (CARDS)
-   ========================================= */
+@media (max-width: 768px) {
+    .logo-img {
+        width: 110px; 
+        left: 5px; 
+        top: 5px; 
+    }
+
+    .main-nav .container-fluid {
+        padding-left: 115px; 
+    }
+
+    .nav-link {
+        padding: 0.5rem !important; 
+        font-size: 0.85rem; 
+    }
+    
+    .nav-link i {
+        display: none;
+    }
+}
+
 .ultimas-noticias-section {
     max-width: 1100px; 
     margin: 0 auto;
@@ -215,20 +194,15 @@ body {
     color: var(--azul-unesc);
 }
 
-/* =========================================
-   6. ÁREA DE LEITURA
-   ========================================= */
 .leitura-container {
     background-color: var(--fundo-cards);
     border: 3px solid var(--azul-unesc);
     scroll-margin-top: 20px; 
 }
 
-
 .leitura-container:focus {
     outline: none;
 }
-
 
 .leitura-container:focus-visible {
     outline: 4px dashed var(--cor-foco);
@@ -251,9 +225,6 @@ body {
     border-color: var(--azul-unesc);
 }
 
-/* =========================================
-   7. CHATBOT E FOOTER
-   ========================================= */
 .site-footer {
     background-color: #212529; 
     color: white;
@@ -317,15 +288,11 @@ body {
     border: 1px solid var(--cor-borda);
 }
 
-/* =========================================
-   8. TEMA DE ALTO CONTRASTE (OVERRIDES GERAIS)
-   ========================================= */
 body.alto-contraste {
     background-color: #000000 !important;
     color: #ffff00 !important;
 }
 
-/* Estruturas e Fundos */
 body.alto-contraste .site-header,
 body.alto-contraste .main-nav,
 body.alto-contraste .accessibility-bar,
@@ -346,14 +313,12 @@ body.alto-contraste .chatbot-input input {
     border: 1px solid #ffff00 !important;
 }
 
-/* Bordas Específicas */
 body.alto-contraste .site-header,
 body.alto-contraste .main-nav,
 body.alto-contraste .accessibility-bar {
     border-bottom: 2px solid #ffff00 !important;
 }
 
-/* Tipografia */
 body.alto-contraste .nav-link,
 body.alto-contraste .section-title,
 body.alto-contraste .card-title,
@@ -374,13 +339,10 @@ body.alto-contraste .chatbot-input input {
     color: #ffff00 !important;
 }
 
-/* Placeholder do input no chatbot */
 body.alto-contraste .chatbot-input input::placeholder {
     color: #cccc00 !important;
 }
 
-
-/* Botões Inativos e Nav Ativa */
 body.alto-contraste .nav-link.active {
     background-color: #222222 !important; 
     border-bottom: 3px solid #ffff00 !important;
@@ -396,7 +358,6 @@ body.alto-contraste .btn-action {
     border: 2px solid #ffff00 !important;
 }
 
-/* Hover em Botões */
 body.alto-contraste .btn-acessibilidade:hover,
 body.alto-contraste .btn-idioma:hover,
 body.alto-contraste .btn-idioma.active,
@@ -407,7 +368,6 @@ body.alto-contraste .btn-action:hover {
     border-color: #ffff00 !important;
 }
 
-/* Garante que textos (spans) e ícones (i) dentro dos botões fiquem pretos no hover do Alto Contraste */
 body.alto-contraste .btn-acessibilidade:hover span,
 body.alto-contraste .btn-acessibilidade:hover i,
 body.alto-contraste .btn-idioma:hover span,
@@ -425,21 +385,15 @@ body.alto-contraste .site-footer {
     border-top: 2px solid #ffff00 !important;
 }
 
-/* =========================================
-   BOTÃO DO CHATBOT NO ALTO CONTRASTE
-   ========================================= */
-/* Altera o fundo do botão para preto e a borda para amarelo */
 body.alto-contraste .chatbot-btn {
     background-color: #000000 !important;
     border: 2px solid #ffff00 !important;
 }
 
-/* Força o ícone dentro do botão a ficar amarelo */
 body.alto-contraste .chatbot-btn i {
     color: #ffff00 !important;
 }
 
-/* Efeito Hover: Quando passa o mouse, o botão fica amarelo e o ícone preto */
 body.alto-contraste .chatbot-btn:hover {
     background-color: #ffff00 !important;
     border-color: #ffff00 !important;
@@ -449,22 +403,16 @@ body.alto-contraste .chatbot-btn:hover i {
     color: #000000 !important;
 }
 
-/* =========================================
-   CABEÇALHO DO CHATBOT NO ALTO CONTRASTE
-   ========================================= */
-/* Força o fundo do cabeçalho do chat a ficar preto e adiciona uma linha divisória amarela */
 body.alto-contraste .chatbot-header {
     background-color: #000000 !important;
     border-bottom: 1px solid #ffff00 !important;
 }
 
-/* Garante que o botão de fechar "X" fique amarelo */
 body.alto-contraste .chatbot-header button {
     color: #ffff00 !important;
-    opacity: 1; /* Garante que o Bootstrap não deixe o botão semi-transparente */
+    opacity: 1; 
 }
 
-/* Efeito Hover no botão "X" do chat */
 body.alto-contraste .chatbot-header button:hover {
     background-color: #ffff00 !important;
     color: #000000 !important;
@@ -474,64 +422,109 @@ body.alto-contraste .section-title {
     border-left: 8px solid #ffff00 !important;
 }
 
-body.alto-contraste .form-control{
+body.alto-contraste .form-control {
     border: 1px solid #ffff00 !important;
 }
 
-body.alto-contraste .leitor-texto{
+body.alto-contraste .leitor-texto {
     font-size: 1.1rem;
     color: #ffff00 !important;
 }
 
-/* =========================================
-   ÁREA DE LEITURA NO ALTO CONTRASTE
-   ========================================= */
-
-/* Força todos os botões da área de leitura a ficarem no padrão de acessibilidade */
 body.alto-contraste #area-leitura .btn {
     background-color: #000000 !important;
     color: #ffff00 !important;
     border: 2px solid #ffff00 !important;
 }
 
-/* Hover dos botões da área de leitura (Inverte as cores) */
 body.alto-contraste #area-leitura .btn:hover {
     background-color: #ffff00 !important;
     color: #000000 !important;
 }
 
-/* Garante que a fonte do subtítulo fique amarela e ignore a classe 'text-muted' */
 body.alto-contraste #leitor-subtitulo {
     color: #ffff00 !important;
 }
 
-/* =========================================
-   CARROSSEL DE NOTÍCIAS NO ALTO CONTRASTE
-   ========================================= */
-/* Sobrescreve o fundo azul transparente do título do carrossel para preto sólido */
 body.alto-contraste .carousel-caption {
     background: #000000 !important;
-    border: 2px solid #ffff00 !important; /* Borda para destacar o quadro em cima da imagem */
+    border: 2px solid #ffff00 !important;
     padding: 15px !important;
 }
 
-/* Garante que o texto do título fique amarelo */
 body.alto-contraste .carousel-caption h5 {
     color: #ffff00 !important;
 }
 
-/* Opcional: Melhora a visibilidade dos indicadores (barrinhas de navegação do carrossel) */
 body.alto-contraste .carousel-indicators button {
     background-color: #ffff00 !important;
 }
 
-/* =========================================
-   MARCAÇÃO DE FOCO NO ALTO CONTRASTE
-   ========================================= */
-/* Garante que qualquer elemento selecionado tenha um foco vermelho forte */
 body.alto-contraste *:focus,
 body.alto-contraste *:focus-visible {
     outline: 4px solid #ff0000 !important;
     outline-offset: 3px !important;
-    box-shadow: none !important; /* Remove o brilho azul padrão do Bootstrap */
+    box-shadow: none !important;
+}
+
+body.admin-page { 
+    background-color: #f8f9fa; 
+    padding-bottom: 50px;
+}
+
+.admin-navbar {
+    background-color: var(--azul-unesc);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-card {
+    background: #fff;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    background-color: rgba(0, 50, 98, 0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 15px 25px;
+    color: var(--azul-unesc);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-card-body {
+    padding: 25px;
+}
+
+.admin-page .form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.admin-page .form-control:focus, 
+.admin-page .form-select:focus {
+    border-color: var(--azul-unesc);
+    box-shadow: 0 0 0 0.25rem rgba(0, 50, 98, 0.25);
+}
+
+.btn-publicar {
+    background-color: var(--azul-unesc);
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-publicar:hover {
+    background-color: #002244;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 50, 98, 0.3);
+    color: white;
 }

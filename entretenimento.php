@@ -1,11 +1,42 @@
 <?php
 include 'conexao.php';
-// Filtra apenas notícias da categoria entretenimento
-$resultado = $conn->query("SELECT * FROM noticias WHERE categoria = 'entretenimento' ORDER BY id DESC");
-$noticias = [];
+
+
+$categoriaAtual = 'entretenimento'; 
+
+
+$sql = "SELECT n.id, n.categoria, n.imagem, t.idioma, t.titulo, t.resumo, t.conteudo 
+        FROM noticias n
+        JOIN noticias_traducoes t ON n.id = t.noticia_id
+        WHERE n.categoria = '$categoriaAtual'
+        ORDER BY n.id DESC";
+
+$resultado = $conn->query($sql);
+$noticiasAgrupadas = [];
+
 if ($resultado) {
-    while ($linha = $resultado->fetch_assoc()) { $noticias[] = $linha; }
+    while ($linha = $resultado->fetch_assoc()) {
+        $id = $linha['id'];
+        
+
+        if (!isset($noticiasAgrupadas[$id])) {
+            $noticiasAgrupadas[$id] = [
+                'id' => $id,
+                'imagem' => $linha['imagem'],
+                'categoria' => $linha['categoria']
+            ];
+        }
+        
+
+        $lang = $linha['idioma']; 
+        $noticiasAgrupadas[$id]["titulo_$lang"] = $linha['titulo'];
+        $noticiasAgrupadas[$id]["resumo_$lang"] = $linha['resumo'];
+        $noticiasAgrupadas[$id]["conteudo_$lang"] = $linha['conteudo'];
+    }
 }
+
+
+$noticias = array_values($noticiasAgrupadas);
 
 include 'header.php';
 ?>
@@ -97,26 +128,18 @@ include 'header.php';
         </section>
 
         <section id="area-leitura" class="leitura-container mt-5 p-4 rounded shadow" tabindex="-1" style="display: none;" aria-live="polite">
-        <!-- Cabeçalho da Notícia: Título/Subtítulo à esquerda, Botões à direita -->
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start border-bottom pb-3 mb-4 gap-3">
-            
-            <!-- Grupo do Título e Subtítulo -->
-            <div>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 mb-4 gap-3">
                 <h2 id="leitor-titulo" class="mb-0" style="color: var(--azul-unesc); font-weight: bold;">Título</h2>
-                <!-- Colocamos um ID e aumentamos a fonte (fs-5) -->
-                <p id="leitor-subtitulo" class="mt-2 mb-0 fs-5 text-muted">lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.</p>
+                
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-primary fw-bold" onclick="lerNoticiaEmVozAlta()" aria-label="Ouvir texto da notícia" data-i18n="ouvirNoticia">🔊 Ouvir Notícia</button>
+                    <button class="btn btn-outline-secondary fw-bold" onclick="pararLeitura()" aria-label="Parar leitura em voz alta" data-i18n="pararLeitura">⏹️ Parar</button>
+                    <button class="btn btn-danger fw-bold fechar-btn" onclick="fecharNoticia()" aria-label="Fechar notícia e voltar aos cards" data-i18n="fechar">Fechar [X]</button>
+                </div>
             </div>
             
-            <!-- Grupo dos Botões -->
-            <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-outline-primary fw-bold" onclick="lerNoticiaEmVozAlta()" aria-label="Ouvir texto da notícia" data-i18n="ouvirNoticia">🔊 Ouvir Notícia</button>
-                <button class="btn btn-outline-secondary fw-bold" onclick="pararLeitura()" aria-label="Parar leitura em voz alta" data-i18n="pararLeitura">⏹️ Parar</button>
-                <button class="btn btn-danger fw-bold fechar-btn" onclick="fecharNoticia()" aria-label="Fechar notícia e voltar aos cards" data-i18n="fechar">Fechar [X]</button>
-            </div>
-        </div>
-                    
-        <div id="leitor-conteudo" class="leitor-texto"></div>
-    </section>
+            <div id="leitor-conteudo" class="leitor-texto"></div>
+        </section>
 
         <div id="templates-noticias" style="display: none;" aria-hidden="true">
             <?php foreach ($noticias as $noticia): ?>
